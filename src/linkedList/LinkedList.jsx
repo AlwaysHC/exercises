@@ -13,7 +13,6 @@ class LinkedList extends Component {
       insertedValues: [],
       value: "",
       errorMessage: "",
-      currentIndex: null
     };
   }
 
@@ -22,7 +21,6 @@ class LinkedList extends Component {
     const newNode = new LinkedListNode(data);
     if (this[head] === null) {
       this[head] = newNode;
-      this.setCurrentIndex(0);
       console.log(newNode.data, 0);
     } else {
       let current = this[head];
@@ -32,32 +30,29 @@ class LinkedList extends Component {
         i++;
       }
       current.next = newNode;
-      this.setCurrentIndex(i);
       console.log(newNode.data, i);
     }
   }
 
   //this function gets the value of node with given index
-  get(index) {
-    if (index > -1) {
+  get(indexFromTheEnd) {
+    if (indexFromTheEnd > 0) {
       let current = this[head];
-      let i = 0;
-      while (current !== null && i < index) {
+
+      //YOUR CODE HERE
+      
+      while (current !== null) {
         current = current.next;
-        i++;
+        //YOUR CODE HERE
       }
-      this.setValue(current.data);
+
+      //YOUR CODE HERE
+      
       return current !== null ? current.data : undefined;
     } else {
       return undefined;
     }
   }
-
-  setCurrentIndex = currIndex => {
-    this.setState({
-      currentIndex: currIndex
-    });
-  };
 
   setValue = data => {
     this.setState({
@@ -86,14 +81,12 @@ class LinkedList extends Component {
     });
   };
 
-  getTheFifthValue = () => {
-    const index = Number(this.state.currentIndex);
-
-    if (index < 4) {
-      this.errorMessage("Not enough values inserted");
-    } else {
-      this.get(index - 4);
+  getTheFifthValueFromTheEnd = () => {
+    if (this.get(5) != undefined) {
       this.errorMessage("");
+    }
+    else {
+      this.errorMessage("Not enough values inserted");
     }
   };
 
@@ -133,7 +126,7 @@ class LinkedList extends Component {
             <h4>Already inserted values: {this.state.insertedValues}</h4>
           </div>
           <div>
-            <button className="btn btn-dark" onClick={this.getTheFifthValue}>
+            <button className="btn btn-dark" onClick={this.getTheFifthValueFromTheEnd}>
               Click to get the 5-th value of Linked List
             </button>
           </div>
